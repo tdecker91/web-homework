@@ -35,6 +35,8 @@ defmodule HomeworkWeb.Endpoint do
     plug(Phoenix.Ecto.CheckRepoStatus, otp_app: :homework)
   end
 
+  plug(CORSPlug)
+
   plug(Phoenix.LiveDashboard.RequestLogger,
     param_key: "request_logger",
     cookie_key: "request_logger"

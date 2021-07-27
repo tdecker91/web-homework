@@ -1,6 +1,10 @@
 #!/bin/bash
 # Docker entrypoint script.
 
+export PGHOST=$POSTGRES_HOST
+export PGUSER=$POSTGRES_USER
+export PGPASSWORD=$POSTGRES_PASSWORD
+
 # Wait until Postgres is ready
 while ! pg_isready -q -h $POSTGRES_HOST -p 5432 -U $POSTGRES_USER
 do
@@ -15,7 +19,6 @@ if [[ -z `psql -Atqc "\\list $POSTGRES_DATABASE"` ]]; then
   echo "Database $POSTGRES_DATABASE does not exist. Creating..."
   mix ecto.create
   mix ecto.migrate
-  mix run priv/repo/seeds.exs
   echo "Database $POSTGRES_DATABASE created."
 fi
 
