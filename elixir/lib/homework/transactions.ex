@@ -17,9 +17,25 @@ defmodule Homework.Transactions do
       [%Transaction{}, ...]
 
   """
-  def list_transactions(_args) do
-    Repo.all(Transaction)
+  def list_transactions(args) do
+    Transaction
+    |> filter_transactions(args)
+    |> Repo.all
   end
+
+  defp filter_transactions(query, args) when is_list(args) do
+    Enum.reduce(args, query, fn arg, q -> filter_transactions(q, arg) end)
+  end
+
+  defp filter_transactions(query, %{min: min}) do
+    query |> where([t], t.amount >= ^min)
+  end
+
+  defp filter_transactions(query, %{max: max}) do
+    query |> where([t], t.amount <= ^max)
+  end
+
+  defp filter_transactions(query, _arg), do: query
 
   @doc """
   Gets a single transaction.

@@ -9,6 +9,17 @@ defmodule HomeworkWeb.Resolvers.UsersResolver do
   end
 
   @doc """
+  Get user by id
+  """
+  def user(_root, args, _info) do
+    user = args
+    |> Map.fetch!(:id)
+    |> Users.get_user!
+
+    {:ok, user}
+  end
+
+  @doc """
   Creates a user
   """
   def create_user(_root, args, _info) do

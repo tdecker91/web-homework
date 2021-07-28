@@ -17,9 +17,21 @@ defmodule Homework.Merchants do
       [%Merchant{}, ...]
 
   """
-  def list_merchants(_args) do
-    Repo.all(Merchant)
+  def list_merchants(args) do
+    Merchant
+    |> filter_merchants(args)
+    |> Repo.all
   end
+
+  defp filter_merchants(query, args) when is_list(args) do
+    Enum.reduce(args, query, fn arg, q -> filter_merchants(q, arg) end)
+  end
+
+  defp filter_merchants(query, %{name: name}) do
+    query |> where([m], ilike(m.name, ^"%#{name}%"))
+  end
+
+  defp filter_merchants(query, _arg), do: query
 
   @doc """
   Gets a single merchant.

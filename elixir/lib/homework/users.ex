@@ -9,17 +9,39 @@ defmodule Homework.Users do
   alias Homework.Users.User
 
   @doc """
-  Returns the list of users.
+  Returns the list of users. Can search by first or last name
 
   ## Examples
 
       iex> list_users([])
       [%User{}, ...]
 
+      iex> list_users([{first_name: "tys"}])
+      [%User{ first_name: tyson, last_name: decker}]
+
+      iex> list_users([{last_name: "deck"}])
+      [%User{ first_name: tyson, last_name: decker}, %User{ first_name: steele, last_name: decker}]
+
   """
-  def list_users(_args) do
-    Repo.all(User)
+  def list_users(args) do
+    User
+    |> filter_users(args)
+    |> Repo.all
   end
+
+  defp filter_users(query, args) when is_list(args) do
+    Enum.reduce(args, query, fn arg, q -> filter_users(q, arg) end)
+  end
+
+  defp filter_users(query, %{first_name: name}) do
+    query |> where([u], ilike(u.first_name, ^"%#{name}%"))
+  end
+
+  defp filter_users(query, %{last_name: name}) do
+    query |> where([u], ilike(u.last_name, ^"%#{name}%"))
+  end
+
+  defp filter_users(query, _arg), do: query
 
   @doc """
   Gets a single user.

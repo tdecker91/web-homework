@@ -85,6 +85,26 @@ defmodule Homework.TransactionsTest do
       assert Transactions.list_transactions([]) == [transaction]
     end
 
+    test "list_transactions/1 filters by max", %{valid_attrs: valid_attrs} do
+      transaction1 = transaction_fixture(valid_attrs, %{amount: 1})
+      _transaction2 = transaction_fixture(valid_attrs, %{amount: 2})
+      _transaction3 = transaction_fixture(valid_attrs, %{amount: 3})
+
+      assert Transactions.list_transactions([%{max: 1}]) == [transaction1]
+      assert length(Transactions.list_transactions([%{max: 2}])) == 2
+      assert length(Transactions.list_transactions([%{max: 3}])) == 3
+    end
+
+    test "list_transactions/1 filters by min", %{valid_attrs: valid_attrs} do
+      _transaction1 = transaction_fixture(valid_attrs, %{amount: 1000})
+      _transaction2 = transaction_fixture(valid_attrs, %{amount: 2000})
+      transaction3 = transaction_fixture(valid_attrs, %{amount: 3000})
+
+      assert Transactions.list_transactions([%{min: 3000}]) == [transaction3]
+      assert length(Transactions.list_transactions([%{min: 2000}])) == 2
+      assert length(Transactions.list_transactions([%{min: 1000}])) == 3
+    end
+
     test "get_transaction!/1 returns the transaction with given id", %{valid_attrs: valid_attrs} do
       transaction = transaction_fixture(valid_attrs)
       assert Transactions.get_transaction!(transaction.id) == transaction
