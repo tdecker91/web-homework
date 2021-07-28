@@ -13,8 +13,13 @@ alias Homework.Repo
 alias Homework.Merchants.Merchant
 alias Homework.Users.User
 alias Homework.Transactions.Transaction
+alias Homework.Companies.Company
 
 require Integer
+
+companies = Enum.to_list(1..5)
+|> Enum.map(fn i -> %Company{ name: "company-#{i}", credit_line: 1000000, available_credit: 1000000 } end)
+|> Enum.map(&Repo.insert!/1)
 
 merchants = [
   %Merchant{ name: "Nike", description: "Clothing Retail"},
@@ -28,7 +33,11 @@ merchants = [
 |> Enum.map(&Repo.insert!/1)
 
 users = Enum.to_list(1..5)
-|> Enum.map(fn i -> %User{ first_name: "user-#{i}", last_name: "last-#{i}"} end)
+|> Enum.map(fn i -> %User{ 
+  first_name: "user-#{i}",
+  last_name: "last-#{i}",
+  company_id: Enum.random(companies).id
+} end)
 |> Enum.map(&Repo.insert!/1)
 
 Enum.to_list(1..500)
@@ -38,6 +47,7 @@ Enum.to_list(1..500)
     credit: Integer.is_odd(i),
     description: "purchase #{i}",
     merchant_id: Enum.random(merchants).id,
-    user_id: Enum.random(users).id
+    user_id: Enum.random(users).id,
+    company_id: Enum.random(companies).id
 } end)
 |> Enum.each(&Repo.insert!/1)
