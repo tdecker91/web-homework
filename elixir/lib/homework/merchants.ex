@@ -23,6 +23,15 @@ defmodule Homework.Merchants do
     |> Repo.all
   end
 
+  @doc """
+  counts the total number of merchants matching the filters
+  """
+  def count(args) do
+    Merchant
+    |> filter_merchants(args)
+    |> Repo.aggregate(:count)
+  end
+
   defp filter_merchants(query, args) when is_list(args) do
     Enum.reduce(args, query, fn arg, q -> filter_merchants(q, arg) end)
   end

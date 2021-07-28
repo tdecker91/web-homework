@@ -5,7 +5,13 @@ defmodule HomeworkWeb.Resolvers.CompaniesResolver do
   Get a list of companies
   """
   def companies(_root, args, _info) do
-    {:ok, Companies.list_companies(args)}
+    data = Companies.list_companies(args)
+    total_rows = Companies.count(args)
+
+    {:ok, %{
+      data: data,
+      total_rows: total_rows
+    }}
   end
 
   @doc """

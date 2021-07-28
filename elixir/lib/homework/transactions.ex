@@ -4,6 +4,7 @@ defmodule Homework.Transactions do
   """
 
   import Ecto.Query, warn: false
+  import HomeworkWeb.Helpers
   alias Homework.Repo
 
   alias Homework.Transactions.Transaction
@@ -20,7 +21,17 @@ defmodule Homework.Transactions do
   def list_transactions(args) do
     Transaction
     |> filter_transactions(args)
+    |> paginate_query(args)
     |> Repo.all
+  end
+
+  @doc """
+  counts the total number of transactions matching the filters
+  """
+  def count(args) do 
+    Transaction
+    |> filter_transactions(args)
+    |> Repo.aggregate(:count)
   end
 
   defp filter_transactions(query, args) when is_list(args) do

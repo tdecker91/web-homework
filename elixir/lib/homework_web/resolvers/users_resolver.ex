@@ -5,7 +5,13 @@ defmodule HomeworkWeb.Resolvers.UsersResolver do
   Get a list of users
   """
   def users(_root, args, _info) do
-    {:ok, Users.list_users(args)}
+    data = Users.list_users(args)
+    total_rows = Users.count(args)
+
+    {:ok, %{
+      data: data,
+      total_rows: total_rows
+    }}
   end
 
   @doc """

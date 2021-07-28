@@ -4,6 +4,7 @@ defmodule Homework.Users do
   """
 
   import Ecto.Query, warn: false
+  import HomeworkWeb.Helpers
   alias Homework.Repo
 
   alias Homework.Users.User
@@ -26,7 +27,17 @@ defmodule Homework.Users do
   def list_users(args) do
     User
     |> filter_users(args)
+    |> paginate_query(args)
     |> Repo.all
+  end
+
+  @doc """
+  counts the total number of users matching the filters
+  """
+  def count(args) do 
+    User
+    |> filter_users(args)
+    |> Repo.aggregate(:count)
   end
 
   defp filter_users(query, args) when is_list(args) do

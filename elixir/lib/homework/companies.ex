@@ -15,6 +15,11 @@ defmodule Homework.Companies do
     Repo.all(Company)
   end
 
+  def count(_args) do
+    Company
+    |> Repo.aggregate(:count)
+  end
+
   @doc """
   Gets a company by id.
   """
