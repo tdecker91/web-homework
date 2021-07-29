@@ -35,7 +35,7 @@ defmodule Homework.UsersTest do
 
     test "list_users/1 returns all users", %{company_id: company_id} do
       user = user_fixture(%{company_id: company_id})
-      assert Users.list_users([]) == [user]
+      assert Users.list_users(%{}) == [user]
     end
 
     test "list_users/1 searches users by first name", %{company_id: company_id} do
@@ -43,10 +43,10 @@ defmodule Homework.UsersTest do
       user2 = user_fixture(%{first_name: "user2", last_name: "last1", company_id: company_id})
       user3 = user_fixture(%{first_name: "user3", last_name: "last1", company_id: company_id})
 
-      assert Users.list_users([%{first_name: "user1"}]) == [user1]
-      assert Users.list_users([%{first_name: "user2"}]) == [user2]
-      assert Users.list_users([%{first_name: "user3"}]) == [user3]
-      assert length(Users.list_users([%{first_name: "user"}])) == 3
+      assert Users.list_users(%{first_name: "user1"}) == [user1]
+      assert Users.list_users(%{first_name: "user2"}) == [user2]
+      assert Users.list_users(%{first_name: "user3"}) == [user3]
+      assert length(Users.list_users(%{first_name: "user"})) == 3
     end
 
     test "list_users/1 searches users by last name", %{company_id: company_id} do
@@ -54,10 +54,10 @@ defmodule Homework.UsersTest do
       user2 = user_fixture(%{first_name: "user2", last_name: "last3", company_id: company_id})
       user3 = user_fixture(%{first_name: "user3", last_name: "last4", company_id: company_id})
 
-      assert Users.list_users([%{last_name: "last2"}]) == [user1]
-      assert Users.list_users([%{last_name: "last3"}]) == [user2]
-      assert Users.list_users([%{last_name: "last4"}]) == [user3]
-      assert length(Users.list_users([%{last_name: "last"}])) == 3
+      assert Users.list_users(%{last_name: "last2"}) == [user1]
+      assert Users.list_users(%{last_name: "last3"}) == [user2]
+      assert Users.list_users(%{last_name: "last4"}) == [user3]
+      assert length(Users.list_users(%{last_name: "last"})) == 3
     end
 
     test "get_user!/1 returns the user with given id", %{company_id: company_id} do

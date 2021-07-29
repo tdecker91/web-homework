@@ -24,16 +24,16 @@ defmodule Homework.MerchantsTest do
 
     test "list_merchants/1 returns all merchants" do
       merchant = merchant_fixture()
-      assert Merchants.list_merchants([]) == [merchant]
+      assert Merchants.list_merchants(%{}) == [merchant]
     end
 
     test "list_merchants/1 searches by name" do
       merchant1 = merchant_fixture(%{name: "merchant1"})
       merchant2 = merchant_fixture(%{name: "merchant2"})
 
-      assert Merchants.list_merchants([%{name: "merchant1"}]) == [merchant1]
-      assert Merchants.list_merchants([%{name: "merchant2"}]) == [merchant2]
-      assert length(Merchants.list_merchants([%{name: "merchant"}])) == 2
+      assert Merchants.list_merchants(%{name: "merchant1"}) == [merchant1]
+      assert Merchants.list_merchants(%{name: "merchant2"}) == [merchant2]
+      assert length(Merchants.list_merchants(%{name: "merchant"})) == 2
     end
 
     test "get_merchant!/1 returns the merchant with given id" do

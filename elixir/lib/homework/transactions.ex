@@ -34,19 +34,21 @@ defmodule Homework.Transactions do
     |> Repo.aggregate(:count)
   end
 
-  defp filter_transactions(query, args) when is_list(args) do
-    Enum.reduce(args, query, fn arg, q -> filter_transactions(q, arg) end)
+  def filter_transactions(query, args) when is_map(args) do
+    args
+    |> Enum.map(fn arg -> arg end)
+    |> Enum.reduce(query, fn {k, v}, q -> filter_transactions(q, k, v) end)
   end
 
-  defp filter_transactions(query, %{min: min}) do
+  defp filter_transactions(query, :min, min) do
     query |> where([t], t.amount >= ^min)
   end
 
-  defp filter_transactions(query, %{max: max}) do
+  defp filter_transactions(query, :max, max) do
     query |> where([t], t.amount <= ^max)
   end
 
-  defp filter_transactions(query, _arg), do: query
+  defp filter_transactions(query, _k, _v), do: query
 
   @doc """
   Gets a single transaction.

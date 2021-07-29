@@ -1,56 +1,66 @@
 import React from 'react'
 import { arrayOf, string, bool, number, shape } from 'prop-types'
-import { css } from '@emotion/core'
-
-const styles = css`
- .header {
-   font-weight: bold;
- }
-`
-
-const makeDataTestId = (transactionId, fieldName) => `transaction-${transactionId}-${fieldName}`
+import { Table } from 'antd'
 
 export function TxTable ({ data }) {
   return (
-    <table css={styles}>
-      <tbody>
-        <tr className='header'>
-          <td >ID</td>
-          <td >User ID</td>
-          <td >Description</td>
-          <td >Merchant ID</td>
-          <td >Debit</td>
-          <td >Credit</td>
-          <td >Amount</td>
-        </tr>
-        {
-          data.map(tx => {
-            const { id, user_id: userId, description, merchant_id: merchantId, debit, credit, amount } = tx
-            return (
-              <tr data-testid={`transaction-${id}`} key={`transaction-${id}`}>
-                <td data-testid={makeDataTestId(id, 'id')}>{id}</td>
-                <td data-testid={makeDataTestId(id, 'userId')}>{userId}</td>
-                <td data-testid={makeDataTestId(id, 'description')}>{description}</td>
-                <td data-testid={makeDataTestId(id, 'merchant')}>{merchantId}</td>
-                <td data-testid={makeDataTestId(id, 'debit')}>{debit}</td>
-                <td data-testid={makeDataTestId(id, 'credit')}>{credit}</td>
-                <td data-testid={makeDataTestId(id, 'amount')}>{amount}</td>
-              </tr>
-            )
-          })
-        }
-      </tbody>
-    </table>
-
+    <Table
+      columns={columns}
+      dataSource={data}
+      pagination={false}
+      scroll={{ y: 530 }}
+      size='middle' />
   )
 }
+
+const columns = [
+  {
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id'
+  },
+  {
+    title: 'User',
+    dataIndex: ['user', 'first_name'],
+    key: 'user'
+  },
+  {
+    title: 'Description',
+    dataIndex: 'description',
+    key: 'desc'
+  },
+  {
+    title: 'Merchant',
+    dataIndex: ['merchant', 'name'],
+    key: 'merchant'
+  },
+  {
+    title: 'Type',
+    dataIndex: 'debit',
+    render: value => value ? 'debit' : 'credit',
+    key: 'type'
+  },
+  {
+    title: 'Amount',
+    dataIndex: 'amount',
+    key: 'amount'
+  }
+]
 
 TxTable.propTypes = {
   data: arrayOf(shape({
     id: string,
-    user_id: string,
+    key: number,
+    user: shape({
+      id: string,
+      first_name: string,
+      last_name: string
+    }),
     description: string,
-    merchant_id: string,
+    merchant: shape({
+      id: string,
+      name: string
+    }),
     debit: bool,
     credit: bool,
     amount: number

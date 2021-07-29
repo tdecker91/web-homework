@@ -40,19 +40,21 @@ defmodule Homework.Users do
     |> Repo.aggregate(:count)
   end
 
-  defp filter_users(query, args) when is_list(args) do
-    Enum.reduce(args, query, fn arg, q -> filter_users(q, arg) end)
+  def filter_users(query, args) when is_map(args) do
+    args
+    |> Enum.map(fn arg -> arg end)
+    |> Enum.reduce(query, fn {k, v}, q -> filter_users(q, k, v) end)
   end
 
-  defp filter_users(query, %{first_name: name}) do
+  defp filter_users(query, :first_name, name) do
     query |> where([u], ilike(u.first_name, ^"%#{name}%"))
   end
 
-  defp filter_users(query, %{last_name: name}) do
+  defp filter_users(query, :last_name, name) do
     query |> where([u], ilike(u.last_name, ^"%#{name}%"))
   end
 
-  defp filter_users(query, _arg), do: query
+  defp filter_users(query, _k, _v), do: query
 
   @doc """
   Gets a single user.

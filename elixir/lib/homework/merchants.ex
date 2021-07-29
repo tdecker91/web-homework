@@ -32,15 +32,17 @@ defmodule Homework.Merchants do
     |> Repo.aggregate(:count)
   end
 
-  defp filter_merchants(query, args) when is_list(args) do
-    Enum.reduce(args, query, fn arg, q -> filter_merchants(q, arg) end)
+  def filter_merchants(query, args) when is_map(args) do
+    args
+    |> Enum.map(fn arg -> arg end)
+    |> Enum.reduce(query, fn {k, v}, q -> filter_merchants(q, k, v) end)
   end
 
-  defp filter_merchants(query, %{name: name}) do
+  defp filter_merchants(query, :name, name) do
     query |> where([m], ilike(m.name, ^"%#{name}%"))
   end
 
-  defp filter_merchants(query, _arg), do: query
+  defp filter_merchants(query, _k, _v), do: query
 
   @doc """
   Gets a single merchant.
