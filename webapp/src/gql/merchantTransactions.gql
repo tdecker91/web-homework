@@ -1,0 +1,9 @@
+query GetMerchantTransactions { 
+  tx_merchants { 
+    merchant {
+      id
+      name
+    }
+    transactions_sum
+  } 
+}

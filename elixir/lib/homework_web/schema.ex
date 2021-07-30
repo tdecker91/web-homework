@@ -32,11 +32,17 @@ defmodule HomeworkWeb.Schema do
     field :total_rows, :integer
   end
 
+  object :merchant_transactions do
+    field :merchant, :merchant
+    field :transactions_sum, :integer
+  end
+
   query do
     @desc "Get all Transactions"
     field(:transactions, :paginated_transactions) do
       arg :min, :integer
       arg :max, :integer
+      arg :company_id, :id
       pagination_args()
       resolve(&TransactionsResolver.transactions/3)
     end
@@ -67,6 +73,11 @@ defmodule HomeworkWeb.Schema do
     field(:companies, :paginated_companies) do
       pagination_args()
       resolve(&CompaniesResolver.companies/3)
+    end
+
+    @desc "Get transaction by merchants"
+    field(:tx_merchants, list_of(:merchant_transactions)) do
+      resolve(&MerchantsResolver.transactions/3)
     end
   end
 

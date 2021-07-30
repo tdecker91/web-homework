@@ -18,7 +18,7 @@ alias Homework.Companies.Company
 require Integer
 
 companies = Enum.to_list(1..5)
-|> Enum.map(fn i -> %Company{ name: "company-#{i}", credit_line: 1000000, available_credit: 1000000 } end)
+|> Enum.map(fn i -> %Company{ name: "Company #{i}", credit_line: 1000000, available_credit: 1000000 } end)
 |> Enum.map(&Repo.insert!/1)
 
 merchants = [

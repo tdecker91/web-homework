@@ -48,6 +48,10 @@ defmodule Homework.Transactions do
     query |> where([t], t.amount <= ^max)
   end
 
+  defp filter_transactions(query, :company_id, company_id) do
+    query |> where([t], t.company_id == ^company_id)
+  end
+
   defp filter_transactions(query, _k, _v), do: query
 
   @doc """

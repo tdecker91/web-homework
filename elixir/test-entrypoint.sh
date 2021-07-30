@@ -1,6 +1,7 @@
 #!/bin/bash
 # Docker entrypoint script.
 
+# expose postgres credentials to psql commands below
 export PGHOST=$POSTGRES_HOST
 export PGUSER=$POSTGRES_USER
 export PGPASSWORD=$POSTGRES_PASSWORD

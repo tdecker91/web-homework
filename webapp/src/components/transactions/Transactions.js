@@ -126,6 +126,7 @@ export function Transactions () {
             defaultPageSize={limit}
             onChange={(page, pageSize) => setPage(page)}
             pageSizeOptions={['25']}
+            style={{ textAlign: 'center' }}
             total={totalRows} />
         </AppCard>
       </Col>

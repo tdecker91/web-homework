@@ -62,7 +62,7 @@ The completed homework assignment must have a usable interface that loads dynami
 
    * [x] Bonus points for adding other data models such as users and merchants that can be input as part of the transaction.
 
- * [ ] Provide a pie chart or histogram of the spend per category or spend per day, respectively.
+ * [x] Provide a pie chart or histogram of the spend per category or spend per day, respectively.
 
  * [ ] Create a user setting that can convert the displayed numbers to Roman Numerals.  This is a problem that we may cover in your interview, so be able to walk us through the code for this feature.
 
@@ -78,7 +78,7 @@ The completed homework assignment must have a usable interface that loads dynami
    * better navigation
    * [x] improved styling
    * nested views
-   * multiple routes with content (budgets, vendors, users, etc)
+   * [x] multiple routes with content (budgets, vendors, users, etc)
 
  If you are uncomfortable writing React code, do something to make us laugh.  Maybe a couple of these:
  * Import a funny gif (eg giphy) via keyboard shortcut.

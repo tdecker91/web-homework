@@ -7,6 +7,7 @@ defmodule Homework.Merchants do
   alias Homework.Repo
 
   alias Homework.Merchants.Merchant
+  alias Homework.Transactions.Transaction
 
   @doc """
   Returns the list of merchants.
@@ -123,5 +124,18 @@ defmodule Homework.Merchants do
   """
   def change_merchant(%Merchant{} = merchant, attrs \\ %{}) do
     Merchant.changeset(merchant, attrs)
+  end
+
+  @doc """
+  Returns sum of transactions per merchant
+  """
+  def transactions(_args) do
+    query = from m in Merchant,
+      left_join: t in Transaction,
+      on: m.id == t.merchant_id,
+      group_by: m.id,
+      select: { m, sum(t.amount)}
+    
+    Repo.all(query)
   end
 end

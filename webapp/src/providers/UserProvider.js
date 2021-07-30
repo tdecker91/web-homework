@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { client } from '../network/apollo-client'
 import GetUsers from '../gql/users.gql'
+import { message } from 'antd'
 
 export function withUsers (HocComponent) {
   return class WithUsers extends Component {
@@ -18,7 +19,7 @@ export function withUsers (HocComponent) {
         this.setState({
           users: response.data.users.data
         })
-      })
+      }).catch(e => message.error('Error getting users'))
     }
 
     render () {

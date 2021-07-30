@@ -4,6 +4,8 @@ query GetCompanies {
         data {
             id
             name
+            available_credit
+            credit_line
         }
     }
 }

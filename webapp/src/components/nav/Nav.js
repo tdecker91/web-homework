@@ -12,6 +12,9 @@ export function Nav () {
         <li>
           <Link to='/transactions'>Transactions</Link>
         </li>
+        <li>
+          <Link to='/companies'>Companies</Link>
+        </li>
       </ul>
     </nav>
   )
@@ -19,6 +22,7 @@ export function Nav () {
 
 const navStyle = css`
   grid-row: 1;
+  font-size: 18px;
 
   & > ul {
       display: flex;

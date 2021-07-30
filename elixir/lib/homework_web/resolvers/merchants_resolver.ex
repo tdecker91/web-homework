@@ -56,4 +56,13 @@ defmodule HomeworkWeb.Resolvers.MerchantsResolver do
         {:error, "could not update merchant: #{inspect(error)}"}
     end
   end
+
+  @doc """
+  Gets the number of transactions by merchant
+  """
+  def transactions(_root, args, _info) do
+    result = Merchants.transactions(args)
+    |> Enum.map(fn {merchant, transactions_sum} -> %{merchant: merchant, transactions_sum: transactions_sum} end)
+    {:ok, result}
+  end
 end
