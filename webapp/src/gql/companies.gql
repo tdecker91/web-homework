@@ -1,0 +1,9 @@
+query GetCompanies {
+    companies {
+        total_rows
+        data {
+            id
+            name
+        }
+    }
+}

@@ -1,0 +1,9 @@
+query GetMerchants {
+    merchants {
+        total_rows
+        data {
+            id
+            name
+        }
+    }
+}

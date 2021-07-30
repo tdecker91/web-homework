@@ -58,9 +58,9 @@ The completed homework assignment must have a usable interface that loads dynami
 
 ## Objectives
 
- * [ ] Write a basic user interface that allows users to enter, edit, and remove transactions.
+ * [x] Write a basic user interface that allows users to enter, edit, and remove transactions.
 
-   * Bonus points for adding other data models such as users and merchants that can be input as part of the transaction.
+   * [x] Bonus points for adding other data models such as users and merchants that can be input as part of the transaction.
 
  * [ ] Provide a pie chart or histogram of the spend per category or spend per day, respectively.
 
@@ -74,9 +74,9 @@ The completed homework assignment must have a usable interface that loads dynami
    * Via URL (eg `?i18n=true`) that turns all of the display text into gibberish (eg replace the front with something that does not use a latin based charset).
    * Utilize this path in the URL (eg `/i18n/app` ) to enable an obviously i18n'd display.  You will have to modify the existing route or SPA configuration in the web server to return the index file for both the main URL and the i18n url.
 
- * [ ] Add a user experience that showcases your abilities on the front end such as:
+ * [x] Add a user experience that showcases your abilities on the front end such as:
    * better navigation
-   * improved styling
+   * [x] improved styling
    * nested views
    * multiple routes with content (budgets, vendors, users, etc)
 

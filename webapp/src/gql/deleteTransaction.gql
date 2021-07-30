@@ -1,0 +1,14 @@
+mutation DeleteTransaction($id: ID!) {
+  delete_transaction(
+    id: $id
+  ) {
+    id
+    user_id
+    merchant_id
+    company_id
+    description
+    debit
+    credit
+    amount
+  }
+}

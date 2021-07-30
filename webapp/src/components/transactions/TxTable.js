@@ -1,8 +1,65 @@
-import React from 'react'
-import { arrayOf, string, bool, number, shape } from 'prop-types'
-import { Table } from 'antd'
+import React, { Fragment } from 'react'
+import { arrayOf, string, bool, number, shape, func } from 'prop-types'
+import { Button, Table } from 'antd'
 
-export function TxTable ({ data }) {
+export function TxTable ({ data, onEdit, onDelete }) {
+  const onClickEdit = (row) => {
+    if (typeof onEdit === 'function') {
+      onEdit(row)
+    }
+  }
+
+  const onClickDelete = (row) => {
+    if (typeof onDelete === 'function') {
+      onDelete(row.id)
+    }
+  }
+
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id'
+    },
+    {
+      title: 'User',
+      dataIndex: ['user', 'first_name'],
+      key: 'user'
+    },
+    {
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'desc'
+    },
+    {
+      title: 'Merchant',
+      dataIndex: ['merchant', 'name'],
+      key: 'merchant'
+    },
+    {
+      title: 'Type',
+      dataIndex: 'debit',
+      render: value => value ? 'debit' : 'credit',
+      key: 'type'
+    },
+    {
+      title: 'Amount',
+      dataIndex: 'amount',
+      key: 'amount'
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: function tableActions (text, row, index) {
+        return (
+          <Fragment>
+            <Button onClick={() => onClickEdit(row)} type='link'>Edit</Button>
+            <Button onClick={() => onClickDelete(row)} type='link'>Delete</Button>
+          </Fragment>
+        )
+      }
+    }
+  ]
   return (
     <Table
       columns={columns}
@@ -12,40 +69,6 @@ export function TxTable ({ data }) {
       size='middle' />
   )
 }
-
-const columns = [
-  {
-    title: 'ID',
-    dataIndex: 'id',
-    key: 'id'
-  },
-  {
-    title: 'User',
-    dataIndex: ['user', 'first_name'],
-    key: 'user'
-  },
-  {
-    title: 'Description',
-    dataIndex: 'description',
-    key: 'desc'
-  },
-  {
-    title: 'Merchant',
-    dataIndex: ['merchant', 'name'],
-    key: 'merchant'
-  },
-  {
-    title: 'Type',
-    dataIndex: 'debit',
-    render: value => value ? 'debit' : 'credit',
-    key: 'type'
-  },
-  {
-    title: 'Amount',
-    dataIndex: 'amount',
-    key: 'amount'
-  }
-]
 
 TxTable.propTypes = {
   data: arrayOf(shape({
@@ -64,5 +87,7 @@ TxTable.propTypes = {
     debit: bool,
     credit: bool,
     amount: number
-  }))
+  })),
+  onDelete: func,
+  onEdit: func
 }
