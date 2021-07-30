@@ -13,7 +13,6 @@ export const TxForm = withTxFormData(function TxForm ({ users, merchants, compan
 
   useEffect(() => {
     if (tx) {
-      console.log(tx)
       form.setFieldsValue({
         user: tx.user.id,
         type: tx.credit ? 'credit' : 'debit',

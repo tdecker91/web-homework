@@ -3,7 +3,6 @@ import { Pie } from '@ant-design/charts'
 import { any } from 'prop-types'
 
 export function TransactionsByMerchant ({ txMerchants }) {
-  console.log(txMerchants)
   var chartValues = txMerchants.map(value => ({
     type: value.merchant.name,
     value: value.transactions_sum
